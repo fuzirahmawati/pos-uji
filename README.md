@@ -40,10 +40,3 @@ Berisi file pengujian aplikasi.
 ### vendor/
 Berisi package Laravel dan dependency yang diinstal menggunakan Composer.
 
-- [x] APP_ENV=production dan APP_DEBUG=false di file .env server.
-- [x] APP_KEY sudah di-generate khusus untuk environment produksi.
-- [x] Menjalankan `php artisan config:cache`, `php artisan route:cache`, dan `php artisan view:cache` untuk performa.
-- [x] Folder `storage` dan `bootstrap/cache` memiliki izin tulis yang benar.
-- [x] Password akun default (contoh: admin) sudah diganti, bukan dibiarkan default.
-- [x] Backup database terjadwal sudah dipikirkan (minimal manual backup sebelum go-live).
-- [x] HTTPS aktif (SSL certificate terpasang) jika di-deploy ke domain publik.
