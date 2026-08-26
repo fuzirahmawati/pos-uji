@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -32,11 +33,31 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:' . User::class,
+            ],
+            'password' => [
+                'required',
+                'confirmed',
+                Rules\Password::defaults(),
+            ],
         ]);
 
+        $kasirRole = Role::where('name', 'Kasir')->first();
+
+        if (!$kasirRole) {
+            return back()->withErrors([
+                'email' => 'Role Kasir belum tersedia.',
+            ]);
+        }
+
         $user = User::create([
+            'role_id' => $kasirRole->id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

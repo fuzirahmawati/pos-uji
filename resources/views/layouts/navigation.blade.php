@@ -4,19 +4,41 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
+                <div class="flex items-center gap-2">
+    <x-application-logo class="block h-9 w-auto fill-current text-indigo-600" />
+    <span class="text-xl font-extrabold text-indigo-600 tracking-wide">
+        POS
+    </span>
+</div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
+                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                             {{ __('Dashboard') }}
+                         </x-nav-link>
+
+                             @if(strcasecmp(auth()->user()->role->name, 'admin') === 0)
+                         <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                             {{ __('Produk') }}
+                         </x-nav-link>
+
+                         <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                             {{ __('Kategori') }}
+                         </x-nav-link>
+                         @endif
+
+                         @if(strcasecmp(auth()->user()->role->name, 'kasir') === 0)
+                            <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
+                                {{ __('Transaksi') }}
+                            </x-nav-link>
+                        @endif
+
+                         <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
+                            {{ __('Laporan') }}
+                        </x-nav-link>
+                    </div>
+                 </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
